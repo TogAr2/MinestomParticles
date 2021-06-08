@@ -4,6 +4,8 @@ import io.github.bloepiloepi.particles.shapes.ParticleShape;
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
 import io.github.bloepiloepi.particles.shapes.builder.CircleBuilder;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.particle.Particle;
@@ -12,18 +14,23 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 
 public class TestMain {
-	private static final InstanceContainer instanceContainer;
-	
-	static {
+	public static void main(String[] args) {
+		MinecraftServer server = MinecraftServer.init();
+		
 		InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 		ChunkGeneratorDemo chunkGeneratorDemo = new ChunkGeneratorDemo();
-		instanceContainer = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
+		InstanceContainer instanceContainer = instanceManager.createInstanceContainer(DimensionType.OVERWORLD);
 		instanceContainer.enableAutoChunkLoad(true);
 		instanceContainer.setChunkGenerator(chunkGeneratorDemo);
-	}
-	
-	public static void main(String[] args) {
 		
+		MojangAuth.init();
+		
+		MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerLoginEvent.class, event -> {
+			event.setSpawningInstance(instanceContainer);
+			event.getPlayer().setRespawnPoint(new Position(0, 41, 0));
+		});
+		
+		server.start("localhost", 25565);
 		
 		// PARTICLE TEST
 		
@@ -64,7 +71,7 @@ public class TestMain {
 			LinePattern linePattern = LinePattern.of("-              ");
 		};
 		
-		ShapeOptions.Builder shapeOptionsBuilder = ShapeOptions.builder(ParticleData.of(Particle.FLAME)).particleCount(60);
+		ShapeOptions.Builder shapeOptionsBuilder = ShapeOptions.builder(Particle.FLAME).particleCount(60);
 		
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
 			ref.linePattern = ref.linePattern.withOffset(1);

@@ -3,17 +3,13 @@ package io.github.bloepiloepi.particles;
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
-import net.minestom.server.particle.ParticleCreator;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 public class ParticleUtils {
     public static void drawParticle(@NotNull Instance instance, @NotNull Position position,
                                     @NotNull ShapeOptions options) {
-        ParticlePacket packet = ParticleCreator.createParticlePacket(options.getParticleData(), false,
-                position.getX(), position.getY(), position.getZ(),
-                0, 0, 0,
-                options.getParticleSpeed(), 1);
+        ParticlePacket packet = options.createPacket(position.getX(), position.getY(), position.getZ());
 
         instance.getPlayers().forEach((player) ->
                 player.getPlayerConnection().sendPacket(packet));

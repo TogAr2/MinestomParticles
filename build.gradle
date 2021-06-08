@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'java-library'
 }
 
 group 'io.github.bloepiloepi'
@@ -10,10 +9,11 @@ repositories {
     maven { url 'https://repo.spongepowered.org/maven' }
     maven { url 'https://libraries.minecraft.net' }
     maven { url 'https://repo.velocitypowered.com/snapshots/' }
+    maven { url "https://repo.minestom.com/repository/maven-public/" }
 
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    api 'com.github.Minestom:Minestom:e17ce94241'
+    implementation 'com.github.Minestom:Minestom:73abe7a4d7'
 }
