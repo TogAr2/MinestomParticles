@@ -1,0 +1,5 @@
+{
+  "entrypoint": "io.github.bloepiloepi.particles.ParticlesMain",
+  "name": "MinestomParticles",
+  "version": "1"
+}
