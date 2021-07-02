@@ -17,3 +17,9 @@ repositories {
 dependencies {
     compileOnly 'com.github.Minestom:Minestom:edaec0cb6d'
 }
+
+test {
+    dependencies {
+        implementation 'com.github.Minestom:Minestom:edaec0cb6d'
+    }
+}
