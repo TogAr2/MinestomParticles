@@ -76,7 +76,7 @@ public class TestMain {
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
 			ref.linePattern = ref.linePattern.withOffset(1);
 			
-			shape.iterator(shapeOptionsBuilder.linePattern(ref.linePattern).build()).draw(instanceContainer, new Position(0, 0, 0));
+			shape.draw(shapeOptionsBuilder.linePattern(ref.linePattern).build(), instanceContainer, new Position(0, 0, 0));
 		}).repeat(3, TimeUnit.TICK).schedule();
 	}
 }

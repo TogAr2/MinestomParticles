@@ -4,13 +4,33 @@ import io.github.bloepiloepi.particles.shapes.builder.BezierBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.CircleBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.MultiPolygonBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.PolygonBuilder;
+import net.minestom.server.entity.Player;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 public abstract class ParticleShape {
     protected static final double EPSILON = 0.00001;
 
-    public abstract @NotNull ParticleIterator<?> iterator(ShapeOptions options);
+    public abstract @NotNull ParticleIterator<?> iterator(@NotNull ShapeOptions options);
+
+    /**
+     * Shortcut for {@code iterator().draw()}
+     */
+    public void draw(@NotNull ShapeOptions options,
+                     @NotNull Collection<Player> players, @NotNull Position start) {
+        iterator(options).draw(players, start);
+    }
+
+    /**
+     * Shortcut for {@code iterator().draw()}
+     */
+    public void draw(@NotNull ShapeOptions options,
+                     @NotNull Instance instance, @NotNull Position start) {
+        iterator(options).draw(instance, start);
+    }
 
     public static @NotNull PolygonBuilder polygon() {
         return new PolygonBuilder();
