@@ -1,10 +1,11 @@
 package io.github.bloepiloepi.particles.shapes;
 
-import net.minestom.server.instance.Instance;
+import net.minestom.server.entity.Player;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class ParticlePolygon extends ParticleShape {
@@ -16,7 +17,7 @@ public class ParticlePolygon extends ParticleShape {
         this.close = close;
     }
 
-    public @NotNull PolygonIterator iterator(ShapeOptions options) {
+    public @NotNull PolygonIterator iterator(@NotNull ShapeOptions options) {
         return new PolygonIterator(this, options);
     }
 
@@ -42,10 +43,10 @@ public class ParticlePolygon extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Instance instance, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
                 ParticleLine.LineIterator line = next();
-                line.draw(instance, start, pattern);
+                line.draw(players, start, pattern);
             }
         }
     }

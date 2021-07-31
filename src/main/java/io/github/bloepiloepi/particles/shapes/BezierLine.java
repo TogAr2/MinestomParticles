@@ -1,14 +1,11 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import io.github.bloepiloepi.particles.ParticleUtils;
-import net.minestom.server.instance.Instance;
+import net.minestom.server.entity.Player;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class BezierLine extends ParticleShape {
     private final Position[] positions;
@@ -36,7 +33,7 @@ public class BezierLine extends ParticleShape {
 
     //TODO options is not fully used for bezier curves (only linePattern)
     @Override
-    public @NotNull BezierIterator iterator(ShapeOptions options) {
+    public @NotNull BezierIterator iterator(@NotNull ShapeOptions options) {
         return new BezierIterator(this, options);
     }
 
@@ -62,11 +59,11 @@ public class BezierLine extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Instance instance, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
                 Position position = next();
                 if (pattern.next()) {
-                    ParticleUtils.drawParticle(instance, start.clone().add(position), options);
+                    ParticleUtils.drawParticle(players, start.clone().add(position), options);
                 }
             }
         }

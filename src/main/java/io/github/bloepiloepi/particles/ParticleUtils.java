@@ -1,18 +1,19 @@
 package io.github.bloepiloepi.particles;
 
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
-import net.minestom.server.instance.Instance;
+import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.utils.PacketUtils;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 public class ParticleUtils {
-    public static void drawParticle(@NotNull Instance instance, @NotNull Position position,
+    public static void drawParticle(Collection<Player> players, @NotNull Position position,
                                     @NotNull ShapeOptions options) {
         ParticlePacket packet = options.createPacket(position.getX(), position.getY(), position.getZ());
-
-        instance.getPlayers().forEach((player) ->
-                player.getPlayerConnection().sendPacket(packet));
+        PacketUtils.sendGroupedPacket(players, packet);
     }
 
     public static Position bezier(@NotNull Position[] points, double time) {

@@ -1,10 +1,11 @@
 package io.github.bloepiloepi.particles.shapes;
 
-import net.minestom.server.instance.Instance;
+import net.minestom.server.entity.Player;
 import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 //TODO better name
@@ -16,7 +17,7 @@ public class MultiPolygon extends ParticleShape {
     }
 
     @Override
-    public @NotNull ParticleIterator<?> iterator(ShapeOptions options) {
+    public @NotNull ParticleIterator<?> iterator(@NotNull ShapeOptions options) {
         return new MultiPolygonIterator(this, options);
     }
 
@@ -42,10 +43,10 @@ public class MultiPolygon extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Instance instance, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
                 ParticleShape shape = next();
-                shape.iterator(options).draw(instance, start, pattern.reset());
+                shape.iterator(options).draw(players, start, pattern.reset());
             }
         }
     }
