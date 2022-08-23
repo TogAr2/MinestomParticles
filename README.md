@@ -1,4 +1,6 @@
 # MinestomParticles
+**NO LONGER MAINTANED**
+
 Extra particle API for Minestom
 
 ## Documentation
